@@ -13,7 +13,8 @@ import java.time.ZonedDateTime;
 
 public class Candidatesdb {
 	
-	private static String dburl = "jdbc:postgresql://localhost:5432/postgres?characterEncoding=UTF-8";
+	//private static String dburl = "jdbc:postgresql://localhost:5432/postgres?characterEncoding=UTF-8";
+	private static String dburl = "jdbc:postgresql://13.125.46.138:5432/postgres?characterEncoding=UTF-8";
     private static String dbusername;
     private static String dbpassword; 
     
