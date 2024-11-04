@@ -14,7 +14,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 
 //@WebFilter("/*") // 모든 요청에 대해 필터 적용
-@WebFilter("/emailsending/login") // 로그인 요청에 대해 필터 적용
+@WebFilter("/login") // 로그인 요청에 대해 필터 적용
 public class JwtFilter implements Filter {
 	
     private static final String SECRET_KEY = "your-secret-key"; // JWT 비밀키 (수정할것)

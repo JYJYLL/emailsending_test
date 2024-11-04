@@ -23,7 +23,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import java.util.Date;
 
 // 로그인 서블릿
-@WebServlet("/emailsending/login")
+@WebServlet("/login")
 public class LoginServlet extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
