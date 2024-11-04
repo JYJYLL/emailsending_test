@@ -23,7 +23,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import java.util.Date;
 
 // 로그인 서블릿
-@WebServlet("/login")
+@WebServlet("/emailsending/login")
 public class LoginServlet extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
@@ -36,7 +36,7 @@ public class LoginServlet extends HttpServlet {
     	// CORS 설정 (모든 도메인에서 접근 가능하게 허용)
     	response.setHeader("Access-Control-Allow-Origin", "*"); // CORS 허용
         response.setHeader("Access-Control-Allow-Methods", "POST");
-        response.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+        response.setHeader("Access-Control-Allow-Headers", "Content-Type");
     	
         // 이메일과 해시된 비밀번호를 가져옴
     	String email = request.getParameter("email");
