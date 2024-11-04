@@ -36,7 +36,7 @@ public class LoginServlet extends HttpServlet {
     	// CORS 설정 (모든 도메인에서 접근 가능하게 허용)
     	response.setHeader("Access-Control-Allow-Origin", "*"); // CORS 허용
         response.setHeader("Access-Control-Allow-Methods", "POST");
-        response.setHeader("Access-Control-Allow-Headers", "Content-Type");
+        response.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
     	
         // 이메일과 해시된 비밀번호를 가져옴
     	String email = request.getParameter("email");
