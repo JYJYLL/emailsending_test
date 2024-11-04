@@ -1,0 +1,1027 @@
+<!-- 연결주소 : http://localhost:8080/UserInfo.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>마이 페이지</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f4f4f4;;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .card {
+            width: 100%;
+            max-width: 500px;
+            border-radius: 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            background: linear-gradient(135deg, #ffffff 0%, #f7f7f7 100%);
+        }
+
+        .card-body {
+            padding: 40px;
+        }
+
+        .card-title {
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .menu-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .menu-item {
+            cursor: pointer;
+            padding: 10px 20px;
+            font-weight: bold;
+            border-bottom: 3px solid transparent;
+            transition: border-color 0.3s, color 0.3s;
+            color: #333;
+            margin: 0 10px;
+        }
+
+        .menu-item.active {
+            border-bottom: 3px solid #007bff;
+            color: #007bff;
+        }
+
+        .info-box {
+            background: #ffffff;
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            font-size: 16px;
+        }
+
+        .info-box i {
+            font-size: 20px;
+            margin-right: 15px;
+            color: #007bff;
+        }
+
+        .info-box p {
+            margin: 0;
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+
+        .info-box .info-label {
+            margin-right: 10px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .edit-button {
+            font-size: 12px;
+            padding: 5px 10px;
+            margin-left: auto;
+            background-color: #007bff; 
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .edit-button:hover {
+            background-color: #0056b3;
+        }
+
+        #delete-account {
+            text-align: right;
+            font-size: 14px;
+            color: #d3d3d3;
+            cursor: pointer;
+            text-decoration: underline;
+            margin-top: 20px;
+            margin-right: 10px;
+        }
+
+        #request-role {
+            font-size: 12px;
+            padding: 5px 10px;
+            margin-left: auto;
+            background-color: #007bff; 
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        #request-role:hover {
+            background-color: #0056b3;
+        }
+
+        #button-container {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+
+        #logout-button {
+            font-size: 12px;
+            padding: 7px 15px;
+            background-color: #dc3545;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        #logout-button:hover {
+            background-color: #c82333;
+        }
+
+        #ec-users-container {
+	        display: grid;
+	        grid-template-columns: repeat(2, 1fr); 
+	        grid-row-gap: 5px;
+	        gap: 10px; 
+		    grid-row-gap: 5px; 
+		    max-height: 300px; 
+		    overflow-y: auto; 
+		    overflow-x: hidden; 
+		    padding: 10px;
+		    box-sizing: border-box;
+		    padding-right: 5px;
+		    margin-top: 5px;
+	    }
+    
+	    .ec-user-card {
+	        background: #fff;
+	        border-radius: 10px;
+	        padding: 15px;
+	        margin: 2px 0;
+	        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	        display: flex;
+	        align-items: center;
+	        transition: transform 0.3s, box-shadow 0.3s;
+	    }
+	
+	    .ec-user-card:hover {
+	        transform: translateY(-5px);
+	        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+	    }
+	   
+	    .ec-user-icon {
+	        font-size: 20px;
+	        margin-left: 10px;
+	        margin-right: 20px;
+	        color: #007bff;
+	    }
+	
+	    .ec-user-info {
+	    	display: flex;
+	        flex-direction: column;
+	        justify-content: center;
+	        margin-left: 0px;
+	    }
+	
+	    .ec-user-info span {
+	        font-weight: bold;
+	        font-size: 1rem;
+	        color: #333;
+	        margin-left: 0; 
+	    }
+	   
+	    .ec-user-info .user-email {
+	        font-size: 0.7rem;
+	        color: #666;
+	        margin-left: 0; 
+    		margin-top: 2px; 
+	    }
+	
+	    .ec-user-info .user-dob {
+	        font-size: 0.7rem;
+	        color: #666;
+	        margin-left: 0;
+   			margin-top: 2px; 
+	    }
+	    
+	    .delete-icon {
+		    color: rgba(220, 53, 69, 0.8);
+		    font-size: 40px;
+		    position: absolute;
+		    left: 50%;
+		    top: 50%; 
+		    transform: translate(-50%, -50%);
+		    display: none; 
+		    cursor: pointer; 
+		}
+		
+		.ec-user-card:hover .delete-icon {
+		    display: block; 
+		}
+		
+		.delete-icon:hover {
+		    color: rgba(220, 53, 69, 1);
+		}
+		
+		#ec-users-container::-webkit-scrollbar {
+		    width: 8px;
+		}
+		
+		#ec-users-container::-webkit-scrollbar-track {
+		    background: #f1f1f1; 
+		    border-radius: 10px; 
+		}
+		
+		#ec-users-container::-webkit-scrollbar-thumb {
+		    background: #d3d3d3; 
+		    border-radius: 10px;
+		}
+		
+		#ec-users-container::-webkit-scrollbar-thumb:hover {
+		    background: #a9a9a9;
+		}
+
+	    .back-button {
+		    background-color: #007bff; 
+		    color: white;
+		    border: none;
+		    border-radius: 50%;
+		    width: 40px;
+		    height: 40px;
+		    display: flex;
+		    align-items: center;
+		    justify-content: center;
+		    position: absolute;
+		    top: 20px;  
+		    left: 20px; 
+		    cursor: pointer;
+		    transition: background-color 0.3s;
+		}
+		
+		.back-button:hover {
+		    background-color: #0056b3; 
+		}
+		
+		#request-container {
+		    max-height: 300px; 
+		    overflow-y: auto; 
+		    overflow-x: hidden; 
+		    padding: 10px; 
+		    margin-top: 0px;
+		}
+		
+		.request-card {
+		    background: #ffffff; 
+		    border-radius: 15px; 
+		    padding: 15px; 
+		    margin: 10px 0; 
+		    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+		    display: flex; 
+		    align-items: center; 
+		}
+		
+		.request-user-icon {
+		    font-size: 20px; 
+		    color: #007bff; 
+		    margin-right: 15px;
+		}
+		
+		.request-user-info {
+		    flex-grow: 1; 
+		}
+		
+		.user-name {
+		    font-weight: bold; 
+		    color: #333;
+		    font-size: 1rem;
+		}
+		
+		.user-email {
+			font-weight: bold;
+		    font-size: 0.8rem; 
+		    color: #666; 
+		}
+		
+		.approve-icon,
+		.reject-icon {
+		    font-size: 20px; 
+		    cursor: pointer; 
+		    margin-left: auto; 
+		    transition: color 0.3s, transform 0.3s; 
+		}
+		
+		.approve-icon {
+		    color: #28a745;
+		    margin-right: 10px;
+		}
+		
+		.reject-icon {
+		    color: #dc3545; 
+		}
+		
+		.approve-icon:hover,
+		.reject-icon:hover {
+		    opacity: 0.8;
+		    transform: scale(1.1); 
+		}
+	
+		#request-container::-webkit-scrollbar {
+		    width: 8px;
+		}
+		
+		#request-container::-webkit-scrollbar-track {
+		    background: #f1f1f1; 
+		    border-radius: 10px; 
+		}
+		
+		#request-container::-webkit-scrollbar-thumb {
+		    background: #d3d3d3; 
+		    border-radius: 10px; 
+		}
+		
+		#request-container::-webkit-scrollbar-thumb:hover {
+		    background: #a9a9a9;
+		}
+		
+		.no-requests-message {
+		    text-align: center; 
+		    color: #888; 
+		    font-size: 1.1rem; 
+		    margin: 20px 0; 
+		}
+		
+		.no-users-message{
+		    text-align: center; 
+		    color: #888; 
+		    font-size: 1.1rem; 
+		    margin: 20px 0;
+		}
+		
+		@media (max-width: 570px) {
+		
+			.menu-item {
+				padding: 5px 8px; 
+		        font-size: 0.9rem; 
+		        margin: 0 5px; 
+			 }
+			 
+			 #ec-users-container { 
+		        grid-template-columns: repeat(1, 1fr); 
+		        padding: 5px;
+		    }
+		    
+		    .ec-user-card {
+		    	position: relative;
+		    	transition: none;
+		    }
+		    
+		   .ec-user-card:hover {
+		        transform: none;
+		        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	    	}
+		    
+		    .delete-icon {
+		        display: block;
+		        position: absolute; 
+		        right: 15px; 
+				
+		        transform: translate(75%, -50%); 
+		        font-size: 20px; 
+		        color: rgba(220, 53, 69, 0.8); 
+		        transition: color 0.3s;
+		    }
+		
+		    .delete-icon:hover {
+		        color: rgba(220, 53, 69, 1); 
+		    }	 
+		    
+			 #button-container {
+		        top: 30px; 
+		        right: 5px; 
+		        transform: scale(0.9);
+		    }
+		    body {
+		        transform: scale(0.8); 
+		        transform-origin: center; 
+		    }
+		}
+		
+		@media (max-width: 389px) {
+			
+			.menu-item {
+				padding: 5px 5px; 
+		        font-size: 0.9rem; 
+		        margin: 0 5px; 
+			 }
+			 
+			 #ec-users-container {
+		        grid-template-columns: repeat(1, 1fr); 
+		        padding: 5px;
+		    }
+		    
+			.ec-user-card {
+		        padding: 15px;
+		        margin: 2px 0;
+		        position: relative;
+		    	transition: none;
+		    }
+		    
+		    .ec-user-card:hover {
+		        transform: none;
+		        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	    	}
+
+		    .ec-user-icon {
+		        font-size: 20px;
+		    }
+		
+		    .ec-user-info span {
+		        font-size: 0.9rem;
+		    }
+		   
+		    .ec-user-info .user-email {
+		        font-size: 0.7rem;
+		    }
+		
+		    .ec-user-info .user-dob {
+		        font-size: 0.7rem;
+		    }
+		    
+		    .delete-icon {
+		        display: block;
+		        position: absolute; 
+		        right: 15px; 
+				
+		        transform: translate(75%, -50%); 
+		        font-size: 20px; 
+		        color: rgba(220, 53, 69, 0.8); 
+		        transition: color 0.3s;
+		    }
+		
+		    .delete-icon:hover {
+		        color: rgba(220, 53, 69, 1); 
+		    }	 
+		    
+			#button-container {
+		        top: -10px; 
+		        right: 5px; 
+		        transform: scale(0.8);
+		    }
+
+		    body {
+		        transform: scale(0.7);
+		        transform-origin: center;
+		    }
+		}
+    
+    </style>
+</head>
+<body>
+    <div id="button-container">
+        <button id="logout-button" class="btn">로그아웃</button>
+    </div>
+    
+    <div class="card">
+        <div class="card-body">
+        	<button id="back-button" class="back-button">
+			    <i class="fas fa-arrow-left"></i>
+			</button>
+			
+            <h5 class="card-title">마이 페이지</h5>
+            <div class="menu-container">
+                <div id="menu-info" class="menu-item active">내정보</div>
+                <div id="menu-two" class="menu-item" style="display: none;">선관위 관리</div>
+                <div id="menu-three" class="menu-item" style="display: none;">권한 신청 관리</div>
+            </div>
+            
+            <div id="content-container">
+                <div id="user-info" class="mt-3">
+                    <div class="info-box">
+                        <i class="fas fa-user"></i>
+                        <p>
+                            <span class="info-label">이름:</span>
+                            <span id="name"></span>
+                        </p>
+                    </div>
+                    <div class="info-box">
+                        <i class="fas fa-calendar-alt"></i>
+                        <p>
+                            <span class="info-label">생일:</span>
+                            <span id="dob"></span>
+                        </p>
+                    </div>
+                    <div class="info-box">
+                        <i class="fas fa-envelope"></i>
+                        <p>
+                            <span class="info-label">이메일:</span>
+                            <span id="email"></span>
+                            <!-- <button class="edit-button" id="edit-email">수정</button>-->
+                        </p>
+                    </div>
+                    <div class="info-box">
+                        <i class="fas fa-lock"></i>
+                        <p>
+                            <span class="info-label">비밀번호:</span>
+                            <span id="password">*****</span>
+                            <button class="edit-button" id="edit-password">수정</button>
+                        </p>
+                    </div>
+                    <div class="info-box">
+                        <i class="fas fa-user-shield"></i>
+                        <p>
+                            <span class="info-label">권한:</span>
+                            <span id="user_type"></span>
+                            <button id="request-role" style="display: none;">권한 신청</button>
+                        </p>
+                    </div>
+                    <div id="delete-account">탈퇴하기</div>
+                </div>
+                
+                 <div id="ec-users-list" style="display: none;">
+			    	<div id="ec-users-container"></div>
+				</div>
+			
+				<div id="request-list" style="display: none;">
+                	<div id="request-container"></div>
+				</div>
+        	</div>
+    	</div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const token = localStorage.getItem("jwtToken");
+            if (!token) { // 토큰 확인
+                alert("로그인이 필요합니다!");
+                window.location.href = "Loggingin.html";
+                return;
+            }
+
+            // 사용자 정보 로드
+            const loadUserInfo = () => {
+                $.ajax({
+                    url: "/userinfo",
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    },
+                    success: function (response) {
+                        document.getElementById("email").textContent = response.email;
+                        document.getElementById("name").textContent = response.name;
+                        document.getElementById("dob").textContent = response.dob;
+                        document.getElementById("user_type").textContent = response.user_type;
+
+                        // 일반 사용자면 권한 신청 버튼 활성화
+                        if (response.user_type === "user") {
+                            // 신청 상태 확인
+                            $.ajax({
+                                url: "/requestRole",
+                                type: "GET",
+                                headers: {
+                                    "Authorization": "Bearer " + token
+                                },
+                                success: function (checkResponse) {
+                                    document.getElementById("request-role").style.display = "inline-block";
+                                    if (checkResponse.message === "이미 권한 신청을 하셨습니다.") { 
+                                        const button = document.getElementById("request-role");
+                                        button.textContent = "권한 신청중";
+                                        button.style.backgroundColor = "#d3d3d3";
+                                        button.style.cursor = "not-allowed";
+                                        button.disabled = true;
+                                    }
+                                }
+                            });
+                        } else {
+                            document.getElementById("request-role").style.display = "none";
+                        }
+
+                        if (response.user_type === "admin") { // 관리자면 선관위 관리 페이지 보임
+                            document.getElementById("menu-two").style.display = "block";
+                            document.getElementById("menu-three").style.display = "block";
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("오류:", error);
+                        alert("사용자 정보를 가져오는데 실패했습니다.");
+                        window.location.href = "Mainpage.html";
+                    }
+                });
+            };
+
+            // 사용자 정보 로드
+            loadUserInfo();
+
+            document.getElementById("content-container").addEventListener("click", function (event) {
+            	// 이메일 수정 버튼
+                /*if (event.target && event.target.id === "edit-email") {
+                    const newEmail = prompt("새 이메일을 입력하세요:", document.getElementById("email").textContent);
+                    if (newEmail) {
+                        $.ajax({
+                            url: "/updateUserInfo",
+                            type: "POST",
+                            headers: {
+                                "Authorization": "Bearer " + token,
+                                "Content-Type": "application/x-www-form-urlencoded"
+                            },
+                            data: { email: newEmail },
+                            success: function () {
+                                alert("이메일이 업데이트되었습니다!");
+                                loadUserInfo();
+                            },
+                            error: function () {
+                                alert("이메일 업데이트에 실패했습니다.");
+                                console.error("Error:", error);
+                            }
+                        });
+                    }
+                }*/
+
+             	// 비밀번호 수정 버튼
+                if (event.target && event.target.id === "edit-password") {
+                    const newPassword = prompt("새 비밀번호를 입력하세요:");
+                    if (newPassword) {
+                        $.ajax({
+                            url: "/updateUserInfo",
+                            type: "POST",
+                            headers: {
+                                "Authorization": "Bearer " + token,
+                                "Content-Type": "application/x-www-form-urlencoded"
+                            },
+                            data: { password: newPassword },
+                            success: function () {
+                                alert("비밀번호가 업데이트되었습니다!");
+                            },
+                            error: function () {
+                                alert("비밀번호 업데이트에 실패했습니다.");
+                                console.error("Error:", error);
+                            }
+                        });
+                    }
+                }
+
+             	// 탈퇴 버튼
+                if (event.target && event.target.id === "delete-account") {
+                    if (confirm("정말로 탈퇴하시겠습니까?")) {
+                        const email = document.getElementById("email").textContent;
+                        $.ajax({
+                            url: "/deleteUser",
+                            type: "DELETE",
+                            headers: {
+                                "Authorization": "Bearer " + token,
+                                "Content-Type": "application/json"
+                            },
+                            data: JSON.stringify({ email: email }),
+                            success: function () {
+                                alert("탈퇴가 완료되었습니다.");
+                                localStorage.removeItem("jwtToken");
+                                window.location.href = "Loggingin.html";
+                            },
+                            error: function () {
+                                alert("탈퇴 처리에 실패했습니다.");
+                            }
+                        });
+                    }
+                }
+             	
+				// 권한 신청 버튼
+                if (event.target && event.target.id === "request-role") {
+                    if (confirm("권한을 신청하시겠습니까?")) {
+                        const name = document.getElementById("name").textContent;
+                        const dob = document.getElementById("dob").textContent;
+                        const email = document.getElementById("email").textContent;
+
+                        $.ajax({
+                            url: "/requestRole",
+                            type: "POST",
+                            headers: {
+                                "Authorization": "Bearer " + token,
+                                "Content-Type": "application/json"
+                            },
+                            data: JSON.stringify({ name: name, email: email, dob: dob }),
+                            success: function () {
+                                const button = document.getElementById("request-role");
+                                button.textContent = "권한 신청중";
+                                button.style.backgroundColor = "#d3d3d3";
+                                button.style.cursor = "not-allowed";
+                                button.disabled = true;
+                                alert("권한 신청이 완료되었습니다.");
+                            },
+                            error: function () {
+                                alert("권한 신청에 실패했습니다.");
+                                console.error("Error:", error);
+                            }
+                        });
+                    }
+                }
+            });
+
+            // 내정보 메뉴
+            document.getElementById("menu-info").addEventListener("click", function () {
+            	
+            	resetMenu();
+            	 
+                document.getElementById("menu-info").classList.add("active");
+                document.getElementById("menu-two").classList.remove("active");
+                document.getElementById("menu-three").classList.remove("active");
+                
+                document.getElementById("ec-users-list").style.display = "none";
+                document.getElementById("request-list").style.display = "none";
+
+                // user-info 보이기
+                document.getElementById("user-info").style.display = "block";
+                
+                loadUserInfo();
+            });
+
+            // 선관위 관리 메뉴
+            document.getElementById("menu-two").addEventListener("click", function () {
+            	
+            	resetMenu();
+            	 
+                document.getElementById("menu-info").classList.remove("active");
+                document.getElementById("menu-two").classList.add("active");
+                document.getElementById("menu-three").classList.remove("active");
+
+                document.getElementById("user-info").style.display = "none";
+                document.getElementById("request-list").style.display = "none";
+
+                // EC 사용자 목록 보이기
+                document.getElementById("ec-users-list").style.display = "block";
+
+                $.ajax({
+				    url: "/getECusers",
+				    type: "GET",
+				    headers: {
+				        "Authorization": "Bearer " + token,
+				    },
+				    success: function (response) {
+				        const usersContainer = document.getElementById("ec-users-container");
+				        usersContainer.innerHTML = ""; // 기존 목록 초기화
+				
+				        if (response.users.length === 0) {
+			                // 사용자가 없는 경우 메시지 표시
+							usersContainer.innerHTML = `<div class="no-users-message">선관위가 없습니다.</div>`;
+				                
+				            usersContainer.style.display = "flex";
+				            usersContainer.style.justifyContent = "center";
+				            usersContainer.style.alignItems = "center";
+				            usersContainer.style.height = "100px";
+			            } else {
+					        response.users.forEach(user => {
+					            const userBlock = `
+					                <div class="ec-user-card">
+					                    <i class="fas fa-user ec-user-icon"></i>
+					                    <div class="ec-user-info">
+					                        <span class="user-name">${user.name}</span>
+					                        <span class="user-dob">${user.dob}</span>
+					                        <span class="user-email">${user.email}</span>
+					                    </div>
+					                    <i class="fas fa-trash delete-icon" data-user-id="${user.id}"></i>
+					                </div>`;
+					            usersContainer.innerHTML += userBlock; // 사용자 블록 추가
+					        });
+					        
+					        DeleteEventListeners(); 
+					        
+					    }
+				    },
+                    error: function (xhr, status, error) {
+                        console.error("EC 사용자 목록을 가져오는데 실패했습니다:", error);
+                    }
+                });
+            });
+            
+         	// 선관위 권한 삭제
+            function DeleteEventListeners() {
+                const deleteIcons = document.querySelectorAll('.delete-icon');
+                deleteIcons.forEach(deleteIcon => {
+                    deleteIcon.addEventListener("click", function() {
+                        const userId = this.dataset.userId; // 삭제할 사용자 ID
+                        const userName = this.previousElementSibling.querySelector('.user-name').innerText; // 사용자 이름
+                        const userEmail = this.previousElementSibling.querySelector('.user-email').innerText; // 사용자 이메일
+                        
+                        const confirmation = confirm(`${userName}의 선관위 권한을 삭제하시겠습니까?`);
+                        if (confirmation) {
+                            
+                            $.ajax({
+                                url: '/EctoU',
+                                type: 'POST',
+                                contentType: 'application/json',
+                                data: JSON.stringify({ email: userEmail }), 
+                                success: function(response) {
+                                	console.log("서버 응답:", response);
+                                    alert(response.message);
+
+                                    // 삭제한 선관위 카드 제거
+                                    const userCard = deleteIcon.closest('.ec-user-card');
+                                    if (userCard) {
+                                        userCard.remove();
+                                    }
+                                    
+                                    // 사용자 목록 비어있는지 확인
+                                    const remainingUserCards = document.querySelectorAll('.ec-user-card');
+                                    const usersContainer = document.getElementById("ec-users-container");
+                                    if (remainingUserCards.length === 0) {
+                                    	
+                                    	const usersContainer = document.getElementById("ec-users-container")
+                                        usersContainer.innerHTML = `<div class="no-users-message">선관위가 없습니다.</div>`;
+
+                                        usersContainer.style.display = "flex";
+                                        usersContainer.style.justifyContent = "center";
+                                        usersContainer.style.alignItems = "center";
+                                        usersContainer.style.height = "100px";
+                                    }
+                                },
+                                error: function(xhr, status, error) {
+                                    alert("권한 변경에 실패했습니다.");
+                                    console.error(error);
+                                }
+                            });
+                        }
+                    });
+                });
+            }
+         	
+            // 권한 신청 메뉴
+			document.getElementById("menu-three").addEventListener("click", function () {
+				
+				 resetMenu();
+				 
+			    document.getElementById("menu-info").classList.remove("active");
+			    document.getElementById("menu-two").classList.remove("active");
+			    document.getElementById("menu-three").classList.add("active");
+			
+			    document.getElementById("user-info").style.display = "none";
+			    document.getElementById("ec-users-list").style.display = "none";
+			
+			    // 권한 신청 목록 보이기
+			    document.getElementById("request-list").style.display = "block";
+			
+			    const token = localStorage.getItem("jwtToken"); 
+			
+			    $.ajax({
+			        url: "/getRequestRole",
+			        type: "GET",
+			        headers: {
+			            "Authorization": "Bearer " + token,
+			        },
+			        success: function (response) {
+			            const requestContainer = document.getElementById("request-container");
+			            requestContainer.innerHTML = ""; // 기존 목록 초기화
+			
+			            if (response.requests.length === 0) {
+			                requestContainer.innerHTML = `<div class="no-requests-message">권한 신청이 없습니다.</div>`;
+			            } else {
+			                response.requests.forEach(request => {
+			                    const requestBlock = `
+			                        <div class="request-card">
+			                            <i class="fas fa-user request-user-icon"></i>
+			                            <div class="request-user-info">
+			                                <span class="user-name">${request.name}</span>
+			                                <span class="user-email">${request.email}</span>
+			                                <!--<span class="user-dob">${request.dob}</span>-->
+			                            </div>
+			                            <i class="fas fa-check-circle approve-icon" data-request-id="${request.email}" data-request-name="${request.name}"></i>
+			                            <i class="fas fa-times-circle reject-icon" data-request-id="${request.email}" data-request-name="${request.name}""></i>
+			                        </div>`;
+			                    requestContainer.innerHTML += requestBlock;
+			                });
+			
+			                // 승인 및 거부 버튼 이벤트
+			                RequestEventListeners();
+			            }
+			        },
+			        error: function (xhr, status, error) {
+			            console.error("권한 신청 목록을 가져오는데 실패했습니다:", xhr.status, error);
+			        }
+			    });
+			});
+         	
+			function RequestEventListeners() {
+			    const approveIcons = document.querySelectorAll('.approve-icon');
+			    const rejectIcons = document.querySelectorAll('.reject-icon');
+			    
+			    const requestContainer = document.getElementById("request-container")
+
+			    // 승인버튼 동작
+			    approveIcons.forEach(icon => {
+			        icon.addEventListener('click', function (event) {
+			            const requestId = this.getAttribute('data-request-id');
+			            const requestName = this.getAttribute('data-request-name');
+			            
+			            const isConfirmed = confirm(`${requestName}의 선관위 신청을 승인하시겠습니까?`);
+			            if (!isConfirmed) {
+			                return; // 사용자가 취소하면 종료
+			            }
+
+			            $.ajax({
+			                url: "/updateRole",
+			                type: "POST",
+			                contentType: "application/json",
+			                data: JSON.stringify({ email: requestId }),
+			                success: function () {
+			                    alert(`${requestName}의 선관위 신청을 승인하였습니다.`);
+			                    const requestCard = event.target.closest('.request-card'); 
+			                    if (requestCard) {
+			                        requestCard.remove(); // 카드 제거
+			                    }
+			                    
+			                    const remainingRequestCards = document.querySelectorAll('.request-card');
+			                    //console.log("남은 요청 카드 수:", remainingRequestCards.length);
+			                    if (remainingRequestCards.length === 0) {
+			                        requestContainer.innerHTML = `<div class="no-requests-message">권한 신청이 없습니다.</div>`;
+			                    }
+			                },
+			                error: function (xhr, status, error) {
+			                    console.error("승인 요청에 실패했습니다:", xhr.status, error);
+			                }
+			            });
+			        });
+			    });
+
+			    // 거부버튼 동작
+			    rejectIcons.forEach(icon => {
+			        icon.addEventListener('click', function (event) {
+			            const requestId = this.getAttribute('data-request-id');
+			            const requestName = this.getAttribute('data-request-name');
+
+			            const isConfirmed = confirm(`${requestName}의 선관위 신청을 거절하시겠습니까?`);
+			            if (!isConfirmed) {
+			                return;
+			            }
+
+			            $.ajax({
+			                url: "/rejectRole",
+			                type: "POST",
+			                contentType: "application/json",
+			                data: JSON.stringify({ email: requestId }),
+			                success: function () {
+			                    alert(`${requestName}의 선관위 신청을 거절하였습니다.`);
+			                    const requestCard = event.target.closest('.request-card');
+			                    if (requestCard) {
+			                        requestCard.remove(); // 카드 제거
+			                    }
+			                    
+			                    const remainingRequestCards = document.querySelectorAll('.request-card');
+			                    //console.log("남은 요청 카드 수:", remainingRequestCards.length);
+			                    if (remainingRequestCards.length === 0) {
+			                        requestContainer.innerHTML = `<div class="no-requests-message">권한 신청이 없습니다.</div>`;
+			                    }
+			                },
+			                error: function (xhr, status, error) {
+			                    console.error("거부 요청에 실패했습니다:", xhr.status, error);
+			                }
+			            });
+			        });
+			    });
+			}
+            
+            // 메뉴 초기화 함수
+            function resetMenu() {
+                document.getElementById("menu-info").classList.remove("active");
+                document.getElementById("menu-two").classList.remove("active");
+                document.getElementById("menu-three").classList.remove("active");
+
+                // 모든 메뉴의 내용을 숨김
+                document.getElementById("user-info").style.display = "none";
+                document.getElementById("ec-users-list").style.display = "none";
+                document.getElementById("request-list").style.display = "none";
+            }
+
+            document.getElementById("back-button").addEventListener("click", function() {
+                window.history.back(); // 이전 페이지로 이동
+            });
+            
+            // 로그아웃
+            document.getElementById("logout-button").addEventListener("click", function() {
+                if (confirm("정말로 로그아웃하시겠습니까?")) { 
+                    localStorage.removeItem("jwtToken"); 
+                    alert("로그아웃되었습니다."); 
+                    window.location.href = "Loggingin.html"; 
+                }
+            });
+        });
+    </script>
+</body>
+</html>
