@@ -210,7 +210,7 @@
 	    // 유저 타입을 확인
 	    function checkUserType() {
 	        const token = localStorage.getItem("jwtToken");
-	        return fetch("/userinfo", {
+	        return fetch("/emailsending/userinfo", {
 	            method: "GET",
 	            headers: {
 	                "Authorization": "Bearer " + token
@@ -326,7 +326,7 @@
             formData.append("voterCsv", voterCsv);
 
             $.ajax({
-            	url: "/createvote",
+            	url: "/emailsending/createvote",
                 type: "POST",
                 data: formData,
                 processData: false,

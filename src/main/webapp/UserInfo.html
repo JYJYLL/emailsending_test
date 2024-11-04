@@ -581,7 +581,7 @@
             // 사용자 정보 로드
             const loadUserInfo = () => {
                 $.ajax({
-                    url: "/userinfo",
+                    url: "/emailsending/userinfo",
                     type: "GET",
                     headers: {
                         "Authorization": "Bearer " + token
@@ -596,7 +596,7 @@
                         if (response.user_type === "user") {
                             // 신청 상태 확인
                             $.ajax({
-                                url: "/requestRole",
+                                url: "/emailsending/requestRole",
                                 type: "GET",
                                 headers: {
                                     "Authorization": "Bearer " + token
@@ -638,7 +638,7 @@
                     const newEmail = prompt("새 이메일을 입력하세요:", document.getElementById("email").textContent);
                     if (newEmail) {
                         $.ajax({
-                            url: "/updateUserInfo",
+                            url: "/emailsending/updateUserInfo",
                             type: "POST",
                             headers: {
                                 "Authorization": "Bearer " + token,
@@ -662,7 +662,7 @@
                     const newPassword = prompt("새 비밀번호를 입력하세요:");
                     if (newPassword) {
                         $.ajax({
-                            url: "/updateUserInfo",
+                            url: "/emailsending/updateUserInfo",
                             type: "POST",
                             headers: {
                                 "Authorization": "Bearer " + token,
@@ -685,7 +685,7 @@
                     if (confirm("정말로 탈퇴하시겠습니까?")) {
                         const email = document.getElementById("email").textContent;
                         $.ajax({
-                            url: "/deleteUser",
+                            url: "/emailsending/deleteUser",
                             type: "DELETE",
                             headers: {
                                 "Authorization": "Bearer " + token,
@@ -712,7 +712,7 @@
                         const email = document.getElementById("email").textContent;
 
                         $.ajax({
-                            url: "/requestRole",
+                            url: "/emailsending/requestRole",
                             type: "POST",
                             headers: {
                                 "Authorization": "Bearer " + token,
@@ -770,7 +770,7 @@
                 document.getElementById("ec-users-list").style.display = "block";
 
                 $.ajax({
-				    url: "/getECusers",
+				    url: "/emailsending/getECusers",
 				    type: "GET",
 				    headers: {
 				        "Authorization": "Bearer " + token,
@@ -825,7 +825,7 @@
                         if (confirmation) {
                             
                             $.ajax({
-                                url: '/EctoU',
+                                url: '/emailsending/EctoU',
                                 type: 'POST',
                                 contentType: 'application/json',
                                 data: JSON.stringify({ email: userEmail }), 
@@ -881,7 +881,7 @@
 			    const token = localStorage.getItem("jwtToken"); 
 			
 			    $.ajax({
-			        url: "/getRequestRole",
+			        url: "/emailsending/getRequestRole",
 			        type: "GET",
 			        headers: {
 			            "Authorization": "Bearer " + token,
@@ -936,7 +936,7 @@
 			            }
 
 			            $.ajax({
-			                url: "/updateRole",
+			                url: "/emailsending/updateRole",
 			                type: "POST",
 			                contentType: "application/json",
 			                data: JSON.stringify({ email: requestId }),
@@ -972,7 +972,7 @@
 			            }
 
 			            $.ajax({
-			                url: "/rejectRole",
+			                url: "/emailsending/rejectRole",
 			                type: "POST",
 			                contentType: "application/json",
 			                data: JSON.stringify({ email: requestId }),

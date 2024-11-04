@@ -312,7 +312,7 @@
             }
 
             // 유저 정보 가져오기
-            fetch("/userinfo", {
+            fetch("/emailsending/userinfo", {
                 method: "GET",
                 headers: {
                     "Authorization": "Bearer " + token
@@ -328,7 +328,7 @@
                 userType = userInfo.user_type;
 
                 // 투표 정보 가져오기
-                fetch(`/getvotes?id=${voteId}`, {
+                fetch(`/emailsending/getvotes?id=${voteId}`, {
                     method: "GET",
                     headers: {
                         "Authorization": "Bearer " + token
@@ -371,7 +371,7 @@
                     }
 
                     // 블록체인 유효성 검사
-                    fetch(`/BlockchainServlet?voteId=${voteId}`, {
+                    fetch(`/emailsending/BlockchainServlet?voteId=${voteId}`, {
                         method: "GET",
                         headers: {
                             "Authorization": "Bearer " + token
@@ -443,7 +443,7 @@
             }
 
             // GetVoteTimeServlet에서 데이터 가져오기
-            fetch(`/getVoteTimes?voteId=${voteId}`, {
+            fetch(`/emailsending/getVoteTimes?voteId=${voteId}`, {
                 method: "GET",
                 headers: {
                     "Authorization": "Bearer " + token
@@ -654,7 +654,7 @@
                 return;
             }
 
-            fetch(`/getresults?voteId=${voteId}`, {
+            fetch(`/emailsending/getresults?voteId=${voteId}`, {
                 method: "GET",
                 headers: {
                     "Authorization": "Bearer " + token
@@ -815,7 +815,7 @@
             const voteId = getQueryParam('id');
             const token = localStorage.getItem("jwtToken");
 
-            fetch(`/getresults?voteId=${voteId}`, {
+            fetch(`/emailsending/getresults?voteId=${voteId}`, {
                 method: "GET",
                 headers: {
                     "Authorization": "Bearer " + token

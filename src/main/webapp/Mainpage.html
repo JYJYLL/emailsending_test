@@ -250,7 +250,7 @@
             const token = localStorage.getItem("jwtToken");
 
             if (token) {
-                fetch("/userinfo", {
+                fetch("/emailsending/userinfo", {
                     method: "GET",
                     headers: {
                         "Authorization": "Bearer " + token
@@ -289,7 +289,7 @@
 		    
 		    votesContainer.style.visibility = 'hidden';
 		
-		    fetch("/getvotes", {
+		    fetch("/emailsending/getvotes", {
 		        method: "GET",
 		        headers: {
 		            "Authorization": "Bearer " + token
@@ -348,7 +348,7 @@
 		
 		            votesContainer.innerHTML = "";
 		
-		            fetch("/userinfo", {
+		            fetch("/emailsending/userinfo", {
 		                method: "GET",
 		                headers: {
 		                    "Authorization": "Bearer " + token
@@ -400,7 +400,7 @@
 			                    	
 			                    	// 유권자 여부 확인
 			                        voteItem.addEventListener("click", function () {
-			                            fetch(`/checkVoter?voteId=${vote.id}`, {
+			                            fetch(`/emailsending/checkVoter?voteId=${vote.id}`, {
 			                                method: "GET",
 			                                headers: {
 			                                    "Authorization": "Bearer " + token
@@ -417,7 +417,7 @@
 			                                    alert("유권자가 아닙니다. 투표에 참여할 수 없습니다.");
 			                                } else {
 			                                    // 유권자인 경우 투표 진행
-			                                    fetch(`/checkvote?voteId=${vote.id}`, {
+			                                    fetch(`/emailsending/checkvote?voteId=${vote.id}`, {
 			                                        method: "GET",
 			                                        headers: {
 			                                            "Authorization": "Bearer " + token
@@ -497,7 +497,7 @@
         function deleteVote(voteId) {
             const token = localStorage.getItem("jwtToken");
 
-            fetch(`/deletevote?id=${voteId}`, {
+            fetch(`/emailsending/deletevote?id=${voteId}`, {
                 method: "DELETE",
                 headers: {
                     "Authorization": "Bearer " + token
